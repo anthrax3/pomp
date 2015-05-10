@@ -18,20 +18,14 @@ class PythonNewsItem(Item):
     title = Field()
     published = Field()
 
-    def __repr__(self):
-        return '%s\n\t%s\n' % (
-            self.title,
-            self.published,
-        )
-
-
 class PythonNewsCrawler(BaseCrawler):
     ENTRY_REQUESTS = 'http://python.org/news/'
 
     def extract_items(self, response):
         for i in news_re.findall(response.body.decode('utf-8')):
-            item = PythonNewsItem()
-            item.title, item.published = i[0], i[2]
+            #item = PythonNewsItem()
+            #item.title, item.published = i[0], i[2]
+            item = PythonNewsItem(i[0], i[2])
             yield item
 
     def next_requests(self, response):
